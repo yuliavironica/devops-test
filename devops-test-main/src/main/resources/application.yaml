@@ -1,0 +1,93 @@
+---
+#-----------------------------------------------------------------------------------------------------------------------
+# Server Config
+#-----------------------------------------------------------------------------------------------------------------------
+---
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: ${SERVER_CONTEXT_PATH:}
+---
+#-----------------------------------------------------------------------------------------------------------------------
+# Spring Config
+#-----------------------------------------------------------------------------------------------------------------------
+---
+spring:
+  application:
+    name: devops-test
+  main:
+    banner-mode: off
+  data:
+    mongodb:
+      host: ${MONGODB_HOST:-}
+      port: ${MONGODB_PORT:27017}
+      username: ${MONGODB_USERNAME:-}
+      password: ${MONGODB_PASSWORD:-}
+      database: ${MONGODB_DATABASE:-}
+      authentication-database: ${MONGODB_AUTHENTICATION_DATABASE:admin}
+---
+#-----------------------------------------------------------------------------------------------------------------------
+# Management Config
+#-----------------------------------------------------------------------------------------------------------------------
+---
+management:
+  endpoints:
+    web:
+      base-path: /
+  endpoint:
+    health:
+      show-details: always
+---
+#-----------------------------------------------------------------------------------------------------------------------
+# com.bayudwiyansatria.auth.Application Config
+#-----------------------------------------------------------------------------------------------------------------------
+---
+logging:
+  level:
+    org:
+      springframework: INFO
+      hibernate:
+        SQL: INFO
+    com:
+      bayudwiyansatria: INFO
+  file:
+    path: ${LOG_PATH:./.data/logs}
+    name: ${logging.file.path}/spring.log
+---
+#-----------------------------------------------------------------------------------------------------------------------
+# Override
+#-----------------------------------------------------------------------------------------------------------------------
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+logging:
+  level:
+    org:
+      springframework: INFO
+      hibernate:
+        SQL: INFO
+    com:
+      balabali: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+---
+spring:
+  config:
+    activate:
+      on-profile: staging
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+logging:
+  level:
+    org:
+      springframework: ERROR
+    com:
+      balabali: INFO
